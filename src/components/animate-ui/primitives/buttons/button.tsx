@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, type HTMLMotionProps } from 'motion/react';
+
 import { Slot, type WithAsChild } from '@/components/animate-ui/primitives/animate/slot';
 
 type ButtonProps = WithAsChild<

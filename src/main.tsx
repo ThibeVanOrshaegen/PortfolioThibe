@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client"
 
 import "./index.css"
 import App from "./App.tsx"
+import './index.css'; // <-- make sure this is imported
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
