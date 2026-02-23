@@ -31,13 +31,11 @@ export function App() {
               {/* ================= Profile Image ================= */}
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className="cursor-pointer">
-                    <img
-                      src={me}
-                      alt="Thibee"
-                      className="w-80 h-auto rounded-2xl shadow-2xl hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
+                  <img
+                    src={me}
+                    alt="Thibee"
+                    className="w-80 h-auto rounded-2xl shadow-2xl hover:scale-105 transition-transform duration-300 cursor-pointer"
+                  />
                 </TooltipTrigger>
 
                 <TooltipContent
@@ -124,7 +122,6 @@ export function App() {
           </div>
 
           {/* ================= Custom Cursor ================= */}
-          {/* Make sure these components use position: fixed internally */}
           <Cursor color="white" />
           <CursorFollow />
 
