@@ -1,26 +1,40 @@
-// app/components/ScrollProgress.tsx
-'use client';
+// src/ScrollProgress.tsx
+import * as React from "react";
+import { Progress as RadixProgress, ProgressIndicator as RadixProgressIndicator } from "@radix-ui/react-progress";
 
-import { useState, useEffect } from 'react';
-import { Progress, ProgressIndicator } from './progress'; // make sure path is correct
+interface ScrollProgressProps {
+  className?: string;
+  indicatorClassName?: string;
+}
 
-export function ScrollProgress() {
-  const [scrollValue, setScrollValue] = useState(0);
+export const ScrollProgress: React.FC<ScrollProgressProps> = ({
+  className,
+  indicatorClassName,
+}) => {
+  const [scroll, setScroll] = React.useState(0);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      const docHeight = document.body.scrollHeight - window.innerHeight;
-      setScrollValue((scrollTop / docHeight) * 100);
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      setScroll(scrollPercent);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // initialize
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <Progress value={scrollValue} className="fixed top-0 left-0 w-full h-2 z-50">
-      <ProgressIndicator className="h-full bg-primary" />
-    </Progress>
+    <RadixProgress
+      className={`relative overflow-hidden rounded-full ${className}`}
+      value={scroll}
+    >
+      <RadixProgressIndicator
+        className={`absolute left-0 top-0 h-full transition-transform duration-200 ease-out ${indicatorClassName}`}
+        style={{ transform: `scaleX(${scroll / 100})`, transformOrigin: "left" }}
+      />
+    </RadixProgress>
   );
-}
+};
